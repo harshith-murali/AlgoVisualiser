@@ -13,6 +13,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { SiteFooter } from "@/components/site-footer";
 
 const modules = [
   {
@@ -153,6 +154,7 @@ export default function LandingPage() {
           ))}
         </div>
       </section>
+      <SiteFooter />
     </main>
   );
 }
