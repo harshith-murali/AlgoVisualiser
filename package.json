@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "test:storage": "node --test tests/storage.test.mjs"
   },
   "dependencies": {
     "@clerk/nextjs": "^6.23.2",

@@ -7,10 +7,10 @@ import {
   Download,
   Pause,
   Play,
-  RotateCcw,
-  Save
+  RotateCcw
 } from "lucide-react";
 
+import { SaveSimulation } from "@/components/simulators/save-simulation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -267,12 +267,10 @@ export function PageSimulator() {
           </div>
           <div className="mt-4 flex gap-2">
             <Button variant="outline">
-              <Save /> Save result
-            </Button>
-            <Button variant="outline">
               <Download /> Export
             </Button>
           </div>
+          <SaveSimulation moduleType="page" algorithm={algorithm} inputData={{ references: parsedReferences, frames }} resultData={result} />
         </Panel>
       </div>
     </div>

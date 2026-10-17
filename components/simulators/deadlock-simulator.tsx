@@ -10,6 +10,7 @@ import {
   RotateCcw
 } from "lucide-react";
 
+import { SaveSimulation } from "@/components/simulators/save-simulation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -311,6 +312,7 @@ export function DeadlockSimulator() {
               setCurrentStep(Number(event.target.value));
             }}
           />
+          <SaveSimulation moduleType="deadlock" algorithm="BANKER" inputData={{ allocation: parsedAllocation, maximum: parsedMaximum, available: parsedAvailable }} resultData={result} />
         </Panel>
       </div>
     </div>

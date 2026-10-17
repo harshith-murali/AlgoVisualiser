@@ -11,3 +11,4 @@ coverage
 
 # Clerk project metadata may contain credentials
 .clerk/
+.neon

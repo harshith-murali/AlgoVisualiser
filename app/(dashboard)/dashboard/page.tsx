@@ -1,3 +1,4 @@
+import { SavedWork } from "@/components/dashboard/saved-work";
 import { Activity, Cpu, HardDrive, Layers3, LockKeyhole } from "lucide-react";
 
 import { StatCard } from "@/components/dashboard/stat-card";
@@ -26,6 +27,7 @@ export default function DashboardPage() {
         <StatCard label="Memory algorithms" value="3" icon={Layers3} detail="FIFO, LRU, Optimal" />
         <StatCard label="Disk algorithms" value="6" icon={HardDrive} detail="Seek movement charts" />
       </div>
+      <SavedWork />
       <div className="grid gap-4 xl:grid-cols-[1.2fr_0.8fr]">
         <Card>
           <CardHeader>

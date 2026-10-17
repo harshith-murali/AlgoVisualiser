@@ -19,6 +19,7 @@ import {
   YAxis
 } from "recharts";
 
+import { SaveSimulation } from "@/components/simulators/save-simulation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -291,6 +292,7 @@ export function DiskSimulator() {
               <Download /> Export
             </Button>
           </div>
+          <SaveSimulation moduleType="disk" algorithm={algorithm} inputData={{ requests: parsed, head, diskSize, direction }} resultData={result} />
         </Panel>
       </div>
     </div>

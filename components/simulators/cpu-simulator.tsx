@@ -10,10 +10,10 @@ import {
   Play,
   Plus,
   RotateCcw,
-  Save,
   Trash2
 } from "lucide-react";
 
+import { SaveSimulation } from "@/components/simulators/save-simulation";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -408,9 +408,6 @@ export function CpuSimulator() {
           </div>
           <div className="mt-4 flex gap-2">
             <Button variant="outline">
-              <Save /> Save result
-            </Button>
-            <Button variant="outline">
               <Download /> Export
             </Button>
           </div>
@@ -468,6 +465,7 @@ export function CpuSimulator() {
               </tbody>
             </table>
           </div>
+          <SaveSimulation moduleType="cpu" algorithm={algorithm} inputData={{ processes, quantum }} resultData={result} />
         </Panel>
       </div>
     </div>

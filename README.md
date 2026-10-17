@@ -112,7 +112,8 @@ npm install
 ### 2. Configure Environment Variables
 Create `.env.local` in the project root:
 ```env
-DATABASE_URL="postgresql://user:password@ep-something.neon.tech/algovisualiser?sslmode=require"
+DATABASE_URL="postgresql://user:password@ep-something-pooler.neon.tech/algovisualiser?sslmode=require"
+DIRECT_URL="postgresql://user:password@ep-something.neon.tech/algovisualiser?sslmode=require"
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
 CLERK_SECRET_KEY="sk_test_..."
 NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
@@ -140,6 +141,7 @@ npm run dev
 ```bash
 npm run lint         # Run ESLint validation
 npm run typecheck    # Validate TypeScript types without emit (tsc --noEmit)
+npm run test:storage # Authentication, input validation, and atomic save checks
 npm run build        # Build optimized production bundle
 ```
 
@@ -159,8 +161,22 @@ application uses Clerk's environment configuration directly, without a dummy key
 
 `DATABASE_URL` enables saved projects, runs, presets, and history. Without it,
 the interactive simulations still run, but cloud persistence is unavailable.
-When connecting a database, apply the committed migrations with
-`npx prisma migrate deploy` before using the persistence APIs.
+Set `DATABASE_URL` to the pooled Neon URL (host containing `-pooler`) and
+`DIRECT_URL` to the direct URL for the same database. Prisma uses `DIRECT_URL`
+for migrations. Test migrations on a Neon child branch, then apply committed
+migrations with `npx prisma migrate deploy` before using the persistence APIs.
+
+Each simulator has **Save project** for its input snapshot and **Save result**
+for its inputs and calculated result. The dashboard's **Saved projects & run
+history** section lists the signed-in user's saved work. Expand an item to
+view its inputs or results; use **Refresh** to reload the list. Saved records
+and their activity entries are written in one transaction.
+
+Neon development tooling is available in `.agents/skills/` (`neon`,
+`neon-postgres`, and `neon-postgres-branches`), with versions recorded in
+`skills-lock.json`. The local `.neon` context and environment files are ignored
+by Git. Preserve the existing Clerk provider and Prisma ORM when working on
+database changes.
 
 ---
 
