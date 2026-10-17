@@ -1,101 +1,149 @@
-# OS Algorithm Simulator
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js_14-black?style=for-the-badge&logo=next.js&logoColor=white" />
+  <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white" />
+  <img src="https://img.shields.io/badge/TailwindCSS-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white" />
+  <img src="https://img.shields.io/badge/Clerk-6C47FF?style=for-the-badge&logo=clerk&logoColor=white" />
+  <img src="https://img.shields.io/badge/Neon_Postgres-00E599?style=for-the-badge&logo=postgresql&logoColor=black" />
+  <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white" />
+  <img src="https://img.shields.io/badge/Recharts-FF6384?style=for-the-badge" />
+</p>
 
-An interactive Operating Systems algorithm visualizer built for CSE students.
-It focuses on step-by-step simulation rather than final-answer tables.
+# OS Algorithm Simulator — Interactive Systems Visualizer
 
-## Features
+> An interactive, high-performance Operating Systems algorithm visualizer designed for Computer Science students and systems engineers. Built to replace static textbook calculations with dynamic, frame-by-frame simulation, interactive timelines, and step-by-step state verification.
 
-- CPU Scheduling simulator with FCFS, SJF, SRTF, Round Robin, and Priority scheduling.
-- Animated Gantt playback with play, pause, previous, next, reset, and slider controls.
-- Page Replacement simulator for FIFO, LRU, and Optimal with frame-by-frame playback.
-- Disk Scheduling simulator for FCFS, SSTF, SCAN, C-SCAN, LOOK, and C-LOOK with animated head movement.
-- Banker’s Algorithm simulator with need matrix calculation, work-vector tracing, safe sequence discovery, and request checks.
-- Light/dark dashboard UI with responsive layouts and bounded visualizations.
-- Custom loading and not-found pages.
+🔗 **Live Demo:** [algo-visualiser-xi.vercel.app](https://algo-visualiser-xi.vercel.app)  
+📦 **Repository:** [github.com/harshith-murali/AlgoVisualiser](https://github.com/harshith-murali/AlgoVisualiser)
 
-## Tech Stack
+---
 
-- Next.js App Router
-- TypeScript
-- Tailwind CSS
-- Clerk authentication
-- Neon Postgres
-- Prisma ORM
-- Radix/shadcn-style UI primitives
-- Recharts
-- Lucide React
+## 🚀 Key Modules & Simulators
 
-## Getting Started
+### 1. ⚙️ CPU Scheduling Engine
+Simulates uniprocessor and preemptive scheduling policies with live Gantt charts and per-process timelines:
+- **Supported Algorithms**:
+  - **FCFS** (First-Come, First-Served) — non-preemptive queue order
+  - **SJF** (Shortest Job First) — optimal non-preemptive turnaround
+  - **SRTF** (Shortest Remaining Time First) — preemptive variant of SJF
+  - **Round Robin (RR)** — configurable time quantum with ready queue transitions
+  - **Priority Scheduling** — both Preemptive and Non-Preemptive modes
+- **Playback Controls**: Step forward, step backward, auto-play, pause, speed adjustment, and scrubbing slider.
+- **Computed Metrics**: Arrival Time, Burst Time, Completion Time, Turnaround Time ($TAT = CT - AT$), and Waiting Time ($WT = TAT - BT$) with aggregate averages.
 
-Install dependencies:
+### 2. 📄 Page Replacement Simulator
+Visualizes memory management and virtual memory page frame allocation:
+- **Supported Policies**:
+  - **FIFO** (First-In, First-Out) with queue-based frame eviction
+  - **LRU** (Least Recently Used) with recency tracking stacks
+  - **Optimal** (Belady’s Min) looking ahead into future reference strings
+- **Analytics**: Frame-by-frame memory tables, page hit vs page fault counters, hit ratio percentage, and Belady's Anomaly comparisons.
 
+### 3. 💽 Disk Scheduling Simulator
+Visualizes magnetic disk arm trajectory across cylinders:
+- **Supported Algorithms**: **FCFS**, **SSTF** (Shortest Seek Time First), **SCAN** (Elevator), **C-SCAN** (Circular SCAN), **LOOK**, and **C-LOOK**.
+- **Interactive Visualizer**: Animated disk head trajectory graph showing cylinder hops and head direction reversals.
+- **Metrics**: Total track head movements (total seek distance) and average seek time.
+
+### 4. 🛡️ Banker’s Algorithm (Deadlock Avoidance)
+Full matrix simulation of Dijkstra's Banker's Algorithm:
+- **State Matrices**: Interactive editors for **Allocation**, **Maximum**, and **Available** resource vectors.
+- **Dynamic Derivation**: Real-time calculation of the **Need Matrix** ($Need = Max - Allocation$).
+- **Safety Algorithm**: Step-by-step verification showing the safe process execution sequence $<P_1, P_3, ...>$ or identifying deadlock states.
+- **Resource Request Algorithm**: Test hypothetical resource allocation requests from specific processes to verify if granting them maintains system safety.
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technology |
+|---|---|
+| **Framework** | Next.js 14 (App Router) |
+| **Language** | TypeScript (strict mode) |
+| **Styling** | Tailwind CSS + Radix UI primitives |
+| **Authentication** | Clerk Auth (OAuth + Email sign-in) |
+| **Database** | Neon Serverless PostgreSQL |
+| **ORM** | Prisma ORM |
+| **Data Visualization** | Recharts + custom SVG Gantt charts |
+| **Icons** | Lucide React |
+
+---
+
+## 📂 Project Structure
+
+```text
+AlgoVisualiser/
+├── app/                        # Next.js App Router (dashboard, auth, simulators)
+│   ├── (auth)/                 # Clerk sign-in & sign-up routes
+│   ├── dashboard/              # Simulator shells & user presets
+│   ├── layout.tsx              # Root layout & ClerkProvider
+│   └── page.tsx                # Landing page & feature showcase
+├── components/
+│   ├── dashboard/              # Navigation sidebar, theme toggles, user profile
+│   ├── simulators/             # Simulator UI controllers (CPU, Page, Disk, Banker)
+│   └── ui/                     # Reusable design system primitives
+├── lib/
+│   ├── simulators/             # Pure, deterministic TypeScript algorithm engines
+│   │   ├── cpu-scheduling.ts   # FCFS, SJF, SRTF, RR, Priority algorithms
+│   │   ├── page-replacement.ts # FIFO, LRU, Optimal algorithms
+│   │   ├── disk-scheduling.ts  # FCFS, SSTF, SCAN, LOOK algorithms
+│   │   └── bankers.ts          # Matrix safety & resource request algorithms
+│   └── utils.ts
+├── prisma/
+│   ├── schema.prisma           # Simulation runs, history, and presets
+│   └── migrations/
+└── package.json
+```
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+- **Node.js** ≥ 18.x
+- **npm** or **pnpm**
+
+### 1. Clone & Install
 ```bash
+git clone https://github.com/harshith-murali/AlgoVisualiser.git
+cd AlgoVisualiser
 npm install
 ```
 
-Create local environment variables:
-
-```bash
-cp .env.example .env.local
-```
-
-Fill in:
-
-```bash
-DATABASE_URL="postgresql://..."
+### 2. Configure Environment Variables
+Create `.env.local` in the project root:
+```env
+DATABASE_URL="postgresql://user:password@ep-something.neon.tech/algovisualiser?sslmode=require"
 NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY="pk_test_..."
 CLERK_SECRET_KEY="sk_test_..."
+NEXT_PUBLIC_CLERK_SIGN_IN_URL="/sign-in"
+NEXT_PUBLIC_CLERK_SIGN_UP_URL="/sign-up"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL="/dashboard"
+NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL="/dashboard"
 ```
 
-Generate Prisma client:
-
+### 3. Setup Database
 ```bash
 npm run prisma:generate
-```
-
-Run locally:
-
-```bash
-npm run dev
-```
-
-Open:
-
-```bash
-http://127.0.0.1:3000
-```
-
-## Database
-
-Apply schema changes:
-
-```bash
 npm run prisma:migrate
 ```
 
-The schema includes models for simulation projects, runs, presets, and recent
-activity. The visible UI is currently focused on algorithm simulation.
+### 4. Run Development Server
+```bash
+npm run dev
+# Open http://localhost:3000
+```
 
-## Validation
+---
+
+## 🧪 Validation & Production Build
 
 ```bash
-npm run lint
-npm run typecheck
-npm run build
+npm run lint         # Run ESLint validation
+npm run typecheck    # Validate TypeScript types without emit (tsc --noEmit)
+npm run build        # Build optimized production bundle
 ```
 
-## Project Structure
+---
 
-```text
-app/                    Next.js routes, dashboard, auth, API routes
-components/dashboard/   Dashboard shell and navigation
-components/simulators/  Interactive simulator UI modules
-components/ui/          Reusable UI primitives
-lib/simulators/         Typed algorithm engines
-prisma/                 Prisma schema and migrations
-public/images/          Static visual assets
-```
-
-## Security Notes
-
-Do not commit `.env` or `.env.local`. They are ignored by `.gitignore`.
+## 📄 License
+MIT License. Built for Operating Systems education and simulation.
