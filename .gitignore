@@ -8,3 +8,6 @@ coverage
 *.tsbuildinfo
 .vercel
 .env*
+
+# Clerk project metadata may contain credentials
+.clerk/

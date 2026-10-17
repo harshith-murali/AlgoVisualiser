@@ -145,5 +145,24 @@ npm run build        # Build optimized production bundle
 
 ---
 
+## Vercel environment setup
+
+Configure `NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY` and `CLERK_SECRET_KEY` from the
+same Clerk application in Vercel before deploying. Also set the sign-in and
+sign-up routes to `/sign-in` and `/sign-up`, and their fallback redirect URLs
+to `/dashboard`. Local `.env.local` files are ignored by Git and are not
+automatically copied into a Git-based Vercel deployment.
+
+After changing environment variables, redeploy. A missing Clerk publishable
+key causes protected pages such as `/dashboard` to fail in middleware. The
+application uses Clerk's environment configuration directly, without a dummy key.
+
+`DATABASE_URL` enables saved projects, runs, presets, and history. Without it,
+the interactive simulations still run, but cloud persistence is unavailable.
+When connecting a database, apply the committed migrations with
+`npx prisma migrate deploy` before using the persistence APIs.
+
+---
+
 ## 📄 License
 MIT License. Built for Operating Systems education and simulation.
